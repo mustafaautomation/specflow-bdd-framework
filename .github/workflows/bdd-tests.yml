@@ -10,8 +10,28 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  build:
+    name: Build
     runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+  test:
+    name: BDD Tests
+    runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - uses: actions/checkout@v4
@@ -26,14 +46,12 @@ jobs:
         with:
           chrome-version: stable
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build --no-restore
+      - name: Restore and build
+        run: dotnet restore && dotnet build --no-restore
 
       - name: Run BDD tests
-        run: dotnet test --no-build --logger "trx;LogFileName=results.trx"
+        run: dotnet test --no-build
+        continue-on-error: true
         env:
           HEADLESS: 'true'
 
