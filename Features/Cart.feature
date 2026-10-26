@@ -5,7 +5,7 @@ Feature: Shopping Cart
     So that I can purchase products
 
     Background:
-        Given I am logged in as standard user
+        Given I am logged in as a standard user
         And I am on the inventory page
 
     @smoke

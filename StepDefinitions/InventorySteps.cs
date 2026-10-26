@@ -27,12 +27,19 @@ public class InventorySteps
         _loginPage.IsOnInventoryPage().Should().BeTrue();
     }
 
+    [Given(@"I am on the inventory page")]
+    public void GivenIAmOnTheInventoryPage()
+    {
+        _loginPage.IsOnInventoryPage().Should().BeTrue();
+    }
+
     [Then(@"I should see (\d+) products on the inventory page")]
     public void ThenIShouldSeeProducts(int count)
     {
         _inventoryPage.GetItemCount().Should().Be(count);
     }
 
+    [Given(@"I add ""(.*)"" to the cart")]
     [When(@"I add ""(.*)"" to the cart")]
     public void WhenIAddToTheCart(string productName)
     {

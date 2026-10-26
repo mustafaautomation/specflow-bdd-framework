@@ -11,12 +11,15 @@ BDD test automation framework using SpecFlow (Gherkin) + Selenium WebDriver on .
 
 ## Scenarios
 
-| Feature | Scenarios | Tags |
+| Feature | Test cases | Tags |
 |---------|-----------|------|
 | Login | 6 (incl. Scenario Outline with 2 examples) | @smoke, @regression |
+| Cart | 5 | @smoke, @regression |
 | Inventory | 3 | @smoke, @regression |
 | Checkout | 3 | @regression |
-| **Total** | **12** | |
+| **Total** | **17** | |
+
+All scenarios run against the public [SauceDemo](https://www.saucedemo.com) site in headless Chrome. Undefined or pending steps fail the run (`specflow.json`), so a scenario can't silently pass as skipped.
 
 ---
 
@@ -32,6 +35,9 @@ dotnet test
 
 # Run smoke scenarios only
 dotnet test --filter "Category=smoke"
+
+# Watch the browser (headless by default)
+HEADLESS=false dotnet test
 
 # Generate living documentation
 dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
@@ -72,7 +78,7 @@ Feature: Login
 ```
 ┌───────────────────���─────────────────────┐
 │        Feature Files (Gherkin)           │
-│  Login.feature │ Inventory │ Checkout    │
+│  Login │ Cart │ Inventory │ Checkout     │
 ├─────────────────────────────────────────┤
 │        Step Definitions                  │
 │  LoginSteps │ InventorySteps │ ...       │
@@ -123,12 +129,14 @@ SpecFlow.Plus.LivingDoc generates browsable HTML from feature files + test resul
 ```
 specflow-bdd-framework/
 ├── Features/
-│   ├── Login.feature          # 6 scenarios (incl. outline)
+│   ├── Login.feature          # 6 test cases (incl. outline)
+│   ├── Cart.feature           # 5 scenarios
 │   ├── Inventory.feature      # 3 scenarios
 │   └── Checkout.feature       # 3 scenarios
 ├── StepDefinitions/
 │   ├── LoginSteps.cs
 │   ├── InventorySteps.cs
+│   ├── CartSteps.cs
 │   └── CheckoutSteps.cs
 ├── Pages/
 │   ├── LoginPage.cs
@@ -140,6 +148,7 @@ specflow-bdd-framework/
 ├── Support/
 │   ├── TestConfig.cs           # Env-based config
 │   └── DriverManager.cs        # Chrome WebDriver factory
+├── specflow.json               # Fail on undefined/pending steps
 ├── SpecFlowBDD.csproj
 └── .github/workflows/bdd-tests.yml
 ```
@@ -154,7 +163,7 @@ specflow-bdd-framework/
 | Selenium 4.27 | Browser automation |
 | NUnit 4.3 | Test runner |
 | FluentAssertions 7.0 | Readable assertions |
-| WebDriverManager | Automatic ChromeDriver setup |
+| Selenium Manager | Resolves a ChromeDriver matching the installed Chrome |
 | .NET 8 | Runtime |
 | LivingDoc | Generated documentation from features |
 

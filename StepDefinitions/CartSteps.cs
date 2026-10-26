@@ -4,28 +4,18 @@ using TechTalk.SpecFlow;
 
 namespace Quvantic.SpecFlowBDD.StepDefinitions;
 
+/// <summary>
+/// Cart-specific steps. Adding/removing products and the badge count are shared with the
+/// inventory feature and live in <see cref="InventorySteps"/>.
+/// </summary>
 [Binding]
 public class CartSteps
 {
     private readonly IWebDriver _driver;
 
-    public CartSteps(ScenarioContext context)
+    public CartSteps(ScenarioContext scenarioContext)
     {
-        _driver = (IWebDriver)context["driver"];
-    }
-
-    [When(@"I add ""(.*)"" to the cart")]
-    public void WhenIAddToTheCart(string productName)
-    {
-        var buttonId = $"add-to-cart-{productName.ToLower().Replace(" ", "-")}";
-        _driver.FindElement(By.CssSelector($"[data-test='{buttonId}']")).Click();
-    }
-
-    [When(@"I remove ""(.*)"" from the cart")]
-    public void WhenIRemoveFromTheCart(string productName)
-    {
-        var buttonId = $"remove-{productName.ToLower().Replace(" ", "-")}";
-        _driver.FindElement(By.CssSelector($"[data-test='{buttonId}']")).Click();
+        _driver = scenarioContext.Get<IWebDriver>("WebDriver");
     }
 
     [When(@"I navigate to the cart")]
@@ -38,13 +28,6 @@ public class CartSteps
     public void WhenIClickCheckout()
     {
         _driver.FindElement(By.Id("checkout")).Click();
-    }
-
-    [Then(@"the cart badge should show ""(.*)""")]
-    public void ThenTheCartBadgeShouldShow(string expected)
-    {
-        var badge = _driver.FindElement(By.CssSelector(".shopping_cart_badge"));
-        Assert.That(badge.Text, Is.EqualTo(expected));
     }
 
     [Then(@"the cart badge should not be visible")]
