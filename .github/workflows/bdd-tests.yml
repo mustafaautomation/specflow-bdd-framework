@@ -51,7 +51,6 @@ jobs:
 
       - name: Run BDD tests
         run: dotnet test --no-build
-        continue-on-error: true
         env:
           HEADLESS: 'true'
 
