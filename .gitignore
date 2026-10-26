@@ -6,5 +6,6 @@ TestResults/
 .DS_Store
 screenshots/
 
-# SpecFlow generates these at build time
+# Reqnroll generates these at build time
 *.feature.cs
+reports/

@@ -1,7 +1,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace Quvantic.SpecFlowBDD.Support;
+namespace Quvantic.ReqnrollBDD.Support;
 
 public static class DriverManager
 {
@@ -10,6 +10,10 @@ public static class DriverManager
         // Selenium Manager (built into Selenium 4.6+) resolves a ChromeDriver that matches the
         // installed Chrome, so no separate driver download step is needed.
         var options = new ChromeOptions();
+        if (TestConfig.ChromeBinary is { } binary)
+        {
+            options.BinaryLocation = binary;
+        }
         if (TestConfig.Headless)
         {
             options.AddArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");

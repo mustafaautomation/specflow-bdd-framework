@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
-namespace Quvantic.SpecFlowBDD.StepDefinitions;
+namespace Quvantic.ReqnrollBDD.StepDefinitions;
 
 /// <summary>
 /// Cart-specific steps. Adding/removing products and the badge count are shared with the

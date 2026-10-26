@@ -1,9 +1,9 @@
 using FluentAssertions;
 using OpenQA.Selenium;
-using Quvantic.SpecFlowBDD.Pages;
-using TechTalk.SpecFlow;
+using Quvantic.ReqnrollBDD.Pages;
+using Reqnroll;
 
-namespace Quvantic.SpecFlowBDD.StepDefinitions;
+namespace Quvantic.ReqnrollBDD.StepDefinitions;
 
 [Binding]
 public class CheckoutSteps

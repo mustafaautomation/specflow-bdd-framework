@@ -1,10 +1,10 @@
 using FluentAssertions;
 using OpenQA.Selenium;
-using Quvantic.SpecFlowBDD.Pages;
-using Quvantic.SpecFlowBDD.Support;
-using TechTalk.SpecFlow;
+using Quvantic.ReqnrollBDD.Pages;
+using Quvantic.ReqnrollBDD.Support;
+using Reqnroll;
 
-namespace Quvantic.SpecFlowBDD.StepDefinitions;
+namespace Quvantic.ReqnrollBDD.StepDefinitions;
 
 [Binding]
 public class InventorySteps

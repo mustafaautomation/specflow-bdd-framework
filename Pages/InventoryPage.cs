@@ -1,6 +1,6 @@
 using OpenQA.Selenium;
 
-namespace Quvantic.SpecFlowBDD.Pages;
+namespace Quvantic.ReqnrollBDD.Pages;
 
 public class InventoryPage
 {
