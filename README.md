@@ -1,11 +1,13 @@
-# SpecFlow BDD Framework
+# Reqnroll BDD Framework (formerly SpecFlow)
 
 [![BDD Tests](https://github.com/mustafaautomation/specflow-bdd-framework/actions/workflows/bdd-tests.yml/badge.svg)](https://github.com/mustafaautomation/specflow-bdd-framework/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4.svg?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
-[![SpecFlow](https://img.shields.io/badge/SpecFlow-3.9-6C3483.svg)](https://specflow.org)
+[![.NET](https://img.shields.io/badge/.NET-10-512BD4.svg?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
+[![Reqnroll](https://img.shields.io/badge/Reqnroll-3.3-6C3483.svg)](https://reqnroll.net)
 
-BDD test automation framework using SpecFlow (Gherkin) + Selenium WebDriver on .NET 8. Page Object Model, scenario outlines, living documentation, and CI/CD integration.
+BDD test automation framework using [Reqnroll](https://reqnroll.net) (Gherkin) and Selenium WebDriver on .NET 10, with Page Objects, scenario outlines, HTML reports and CI.
+
+This repo started on SpecFlow. SpecFlow reached end of life on 31 December 2024, so it was migrated to Reqnroll, its open-source successor. The feature files and step bindings did not change; the namespace moved from `TechTalk.SpecFlow` to `Reqnroll`, `specflow.json` became `reqnroll.json`, and SpecFlow+ LivingDoc (discontinued with SpecFlow) was replaced by Reqnroll's built-in HTML formatter. The repository keeps its original name so existing links work.
 
 ---
 
@@ -19,7 +21,7 @@ BDD test automation framework using SpecFlow (Gherkin) + Selenium WebDriver on .
 | Checkout | 3 | @regression |
 | **Total** | **17** | |
 
-All scenarios run against the public [SauceDemo](https://www.saucedemo.com) site in headless Chrome. Undefined or pending steps fail the run (`specflow.json`), so a scenario can't silently pass as skipped.
+All scenarios run against the public [SauceDemo](https://www.saucedemo.com) site in headless Chrome. Undefined or pending steps fail the run (`reqnroll.json`), so a scenario can't silently pass as skipped.
 
 ---
 
@@ -39,9 +41,11 @@ dotnet test --filter "Category=smoke"
 # Watch the browser (headless by default)
 HEADLESS=false dotnet test
 
-# Generate living documentation
-dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
-livingdoc test-assembly bin/Debug/net8.0/SpecFlowBDD.dll -t bin/Debug/net8.0/TestExecution.json
+# Use a specific Chrome/Chromium binary, e.g. Chrome for Testing (default: installed Chrome)
+CHROME_BINARY="/path/to/chrome" dotnet test
+
+# HTML and Cucumber Messages reports are written on every run
+open bin/Debug/net10.0/reports/reqnroll_report.html
 ```
 
 ---
@@ -90,7 +94,7 @@ Feature: Login
 │        Hooks + Support                   │
 │  WebDriverHooks │ DriverManager │ Config │
 ├─────────────────────────────────────────┤
-│  SpecFlow │ Selenium │ NUnit │ FluentAs  │
+│  Reqnroll │ Selenium │ NUnit │ FluentAs  │
 └─────────────────────────────────────────┘
 ```
 
@@ -99,7 +103,7 @@ Feature: Login
 ## Key Patterns
 
 ### ScenarioContext Dependency Injection
-SpecFlow injects `ScenarioContext` into steps and hooks. WebDriver is shared via context:
+Reqnroll injects `ScenarioContext` into steps and hooks. WebDriver is shared via context:
 
 ```csharp
 [BeforeScenario]
@@ -119,8 +123,8 @@ public void WhenILoginWith(string username, string password)
 }
 ```
 
-### Living Documentation
-SpecFlow.Plus.LivingDoc generates browsable HTML from feature files + test results.
+### Reports
+`reqnroll.json` turns on Reqnroll's formatters: an HTML report (`reports/reqnroll_report.html`) and a Cucumber Messages file (`reports/reqnroll_report.ndjson`) in the test output folder. CI uploads both.
 
 ---
 
@@ -148,8 +152,8 @@ specflow-bdd-framework/
 ├── Support/
 │   ├── TestConfig.cs           # Env-based config
 │   └── DriverManager.cs        # Chrome WebDriver factory
-├── specflow.json               # Fail on undefined/pending steps
-├── SpecFlowBDD.csproj
+├── reqnroll.json               # Fail on undefined/pending steps; report formatters
+├── ReqnrollBDD.csproj
 └── .github/workflows/bdd-tests.yml
 ```
 
@@ -159,13 +163,12 @@ specflow-bdd-framework/
 
 | Tool | Purpose |
 |------|---------|
-| SpecFlow 3.9 | BDD framework with Gherkin parser |
-| Selenium 4.27 | Browser automation |
-| NUnit 4.3 | Test runner |
-| FluentAssertions 7.0 | Readable assertions |
+| Reqnroll 3.3 | BDD framework with Gherkin parser and HTML reports |
+| Selenium 4.51 | Browser automation |
+| NUnit 5 | Test runner |
+| FluentAssertions 7.2 | Readable assertions (kept on 7.x: 8.x needs a commercial licence) |
 | Selenium Manager | Resolves a ChromeDriver matching the installed Chrome |
-| .NET 8 | Runtime |
-| LivingDoc | Generated documentation from features |
+| .NET 10 (LTS) | Runtime |
 
 ---
 

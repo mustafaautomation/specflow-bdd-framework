@@ -1,8 +1,8 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using Quvantic.SpecFlowBDD.Support;
+using Quvantic.ReqnrollBDD.Support;
 
-namespace Quvantic.SpecFlowBDD.Pages;
+namespace Quvantic.ReqnrollBDD.Pages;
 
 public class CheckoutPage
 {
